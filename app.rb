@@ -1,6 +1,5 @@
 require 'nyny'
 require 'json'
-require 'debugger'
 
 class App < NYNY::App
   get '/' do
@@ -16,7 +15,6 @@ class App < NYNY::App
 
     puts "user_id: #{user_id}"
 
-    debugger
     if !File.directory? user_id
       # make directory for user_id
       Dir.mkdir user_id
@@ -29,7 +27,7 @@ class App < NYNY::App
     puts "wrote to file #{filename}"
     puts requestData
 
-    headers['Access-Control-Allow-Origin'] = 'chrome-extension://oophbkhofmknaajfheijgcfbpcehphaj'
+    headers['Access-Control-Allow-Origin'] = 'chrome-extension://bklnejfjjbjnokioghhknnngghgfmhjc'
   end
 end
 
