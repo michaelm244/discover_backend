@@ -10,10 +10,9 @@ class App < NYNY::App
   post '/data_post' do
     filename = (0...8).map { (65 + rand(26)).chr }.join
     filename << ".json"
-    data = JSON.parse request.body.read
+    requestData = request.body.read
+    data = JSON.parse requestData
     user_id = data["user_id"]
-
-    debugger
 
     puts "user_id: #{user_id}"
 
@@ -23,11 +22,11 @@ class App < NYNY::App
     end
 
     File.open("#{user_id}/#{filename}", 'w') { |f|
-      f.write(request.body.read)
+      f.write(requestData)
     }
 
     puts "wrote to file #{filename}"
-    puts request.body.read
+    puts requestData
 
     headers['Access-Control-Allow-Origin'] = 'chrome-extension://oophbkhofmknaajfheijgcfbpcehphaj'
   end
