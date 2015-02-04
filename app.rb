@@ -1,5 +1,6 @@
 require 'nyny'
 require 'json'
+require 'debugger'
 
 class App < NYNY::App
   get '/' do
@@ -11,6 +12,8 @@ class App < NYNY::App
     filename << ".json"
     data = JSON.parse request.body.read
     user_id = data["user_id"]
+
+    debugger
 
     puts "user_id: #{user_id}"
 
