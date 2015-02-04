@@ -13,8 +13,6 @@ class App < NYNY::App
     data = JSON.parse request.body.read
     user_id = data["user_id"]
 
-    binding.pry
-
     puts "user_id: #{user_id}"
 
     if !File.directory? user_id
