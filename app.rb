@@ -16,6 +16,7 @@ class App < NYNY::App
 
     puts "user_id: #{user_id}"
 
+    debugger
     if !File.directory? user_id
       # make directory for user_id
       Dir.mkdir user_id
