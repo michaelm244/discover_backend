@@ -1,9 +1,9 @@
 require 'nyny'
 require 'json'
+require 'pry'
 
 class App < NYNY::App
   get '/' do
-    debugger
     'wassup cuh'
   end
 
@@ -12,6 +12,8 @@ class App < NYNY::App
     filename << ".json"
     data = JSON.parse request.body.read
     user_id = data["user_id"]
+
+    binding.pry
 
     puts "user_id: #{user_id}"
 
