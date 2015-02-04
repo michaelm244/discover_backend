@@ -3,6 +3,7 @@ require 'json'
 
 class App < NYNY::App
   get '/' do
+    debugger
     'wassup cuh'
   end
 
