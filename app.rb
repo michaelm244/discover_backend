@@ -1,6 +1,5 @@
 require 'nyny'
 require 'json'
-require 'pry'
 
 class App < NYNY::App
   get '/' do
