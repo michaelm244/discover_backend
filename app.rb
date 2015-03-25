@@ -54,6 +54,8 @@ class App < NYNY::App
       value["visits"] > 10
     }
 
+    data.join " "
+
 
   end
 end
