@@ -33,6 +33,8 @@ class App < NYNY::App
 
   get '/suggested_sites/:user_id' do
     binding.pry
+    headers['Access-Control-Allow-Origin'] = 'chrome-extension://bklnejfjjbjnokioghhknnngghgfmhjc'
+    'whats up bro'
   end
 end
 
