@@ -54,7 +54,10 @@ class App < NYNY::App
       value["visits"] > 10
     }
 
-    data.join " "
+    # sort by time
+    sortedData = data.sort_by {|key, value| value["time"]}
+
+    sortedData.slice((-10..-1)).join " "
 
 
   end
