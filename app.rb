@@ -1,5 +1,6 @@
 require 'nyny'
 require 'json'
+require 'pry'
 
 class App < NYNY::App
   get '/' do
@@ -28,6 +29,10 @@ class App < NYNY::App
     puts requestData
 
     headers['Access-Control-Allow-Origin'] = 'chrome-extension://bklnejfjjbjnokioghhknnngghgfmhjc'
+  end
+
+  get '/suggested_sites/:user_id' do
+    binding.pry
   end
 end
 
