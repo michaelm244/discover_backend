@@ -38,7 +38,7 @@ class App < NYNY::App
 
     data = {}
     files.each do |filename|
-      currFile = File.open "#{user_id}/#{filename}", "r"
+      currFile = File.open filename, "r"
       currData = JSON.parse currFile.read()
       currData.each do |key, value|
         currentValues = data[key] || {"time" => 0, "visits" => 0}
