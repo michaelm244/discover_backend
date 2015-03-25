@@ -41,9 +41,11 @@ class App < NYNY::App
       currFile = File.open filename, "r"
       currData = JSON.parse currFile.read()
       currData.each do |key, value|
+        next if key == "user_id"
         currentValues = data[key] || {"time" => 0, "visits" => 0}
-        data[key]["time"] += value["time"]
-        data[key]["visits"] += value["visits"]
+        currentValues["time"] += value["time"]
+        currentValues["visits"] += value["visits"]
+        data[key] = currentValues
       end
     end
 
@@ -52,7 +54,6 @@ class App < NYNY::App
       value["visits"] > 10
     }
 
-    binding.pry
 
   end
 end
