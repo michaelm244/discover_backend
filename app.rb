@@ -31,9 +31,29 @@ class App < NYNY::App
   end
 
   get '/suggested_sites/:user_id' do
-    binding.pry
+    user_id = params["user_id"]
     headers['Access-Control-Allow-Origin'] = 'chrome-extension://bklnejfjjbjnokioghhknnngghgfmhjc'
-    'whats up bro'
+    files = Dir["#{user_id}/*"]
+    return 'Invalid user id' if files.size == 0
+
+    data = {}
+    files.each do |filename|
+      currFile = File.open "#{user_id}/#{filename}", "r"
+      currData = JSON.parse currFile.read()
+      currData.each do |key, value|
+        currentValues = data[key] || {"time" => 0, "visits" => 0}
+        data[key]["time"] += value["time"]
+        data[key]["visits"] += value["visits"]
+      end
+    end
+
+    # filter out websites with more than 10 visits
+    data.delete_if {|key, value|
+      value["visits"] > 10
+    }
+
+    binding.pry
+
   end
 end
 
