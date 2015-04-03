@@ -57,9 +57,7 @@ class App < NYNY::App
     # sort by time
     sortedData = data.sort_by {|key, value| value["time"]}
 
-    sortedData.slice((-10..-1))
-
-    JSON.generate sortedData
+    JSON.generate sortedData.slice((-10..-1))
   end
 end
 
