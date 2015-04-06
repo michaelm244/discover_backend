@@ -71,9 +71,11 @@ class App < NYNY::App
       # sort by time
       sortedData = filteredData.sort_by! {|value| value["time"]}
 
-      binding.pry
-
-      JSON.generate sortedData.slice((-10..-1))
+      if sortedData.length < 10
+        JSON.generate sortedData
+      else
+        JSON.generate sortedData.slice((-10..-1))
+      end
     end
   end
 end
