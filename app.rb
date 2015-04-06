@@ -61,16 +61,20 @@ class App < NYNY::App
 
     return 'Invalid user id' if data.count == 0
 
-    filteredData = []
+    if data.count == 0
+      'Invalid user id'
+    else
+      filteredData = []
 
-    data.each do |entry|
-      filteredData.push(entry) if entry["visits"] < 10
+      data.each do |entry|
+        filteredData.push(entry) if entry["visits"] < 10
+      end
+
+      # sort by time
+      sortedData = filteredData.sort_by! {|value| value["time"]}
+
+      JSON.generate sortedData.slice((-10..-1))
     end
-
-    # sort by time
-    sortedData = filteredData.sort_by! {|value| value["time"]}
-
-    JSON.generate sortedData.slice((-10..-1))
   end
 end
 
