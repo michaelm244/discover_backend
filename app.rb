@@ -60,7 +60,7 @@ class App < NYNY::App
     data = $col.find(:user_id => user_id)
 
     if data.count == 0
-      'Invalid user id'
+      JSON.generate []
     else
       filteredData = []
 
