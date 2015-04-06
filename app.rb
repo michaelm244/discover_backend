@@ -55,27 +55,17 @@ class App < NYNY::App
   get '/suggested_sites/:user_id' do
     user_id = params["user_id"]
     headers['Access-Control-Allow-Origin'] = 'chrome-extension://bklnejfjjbjnokioghhknnngghgfmhjc'
-    files = Dir["#{user_id}/*"]
-    return 'Invalid user id' if files.size == 0
 
-    data = {}
-    files.each do |filename|
-      currFile = File.open filename, "r"
-      currData = JSON.parse currFile.read()
-      currData.each do |key, value|
-        next if key == "user_id"
-        currentValues = data[key] || {"time" => 0, "visits" => 0}
-        currentValues["time"] += value["time"]
-        currentValues["visits"] += value["visits"]
-        currentValues["title"] = value["title"]
-        data[key] = currentValues
-      end
-    end
+    data = $col.find(:user_id => user_id)
 
-    # filter out websites with more than 10 visits
-    data.delete_if {|key, value|
-      value["visits"] > 10
-    }
+    return 'Invalid user id' if data.count == 0
+
+    filteredData = []
+
+    data.each do |entry|
+      filteredData.push(entry) if entry["visits"] < 10
+
+    binding.pry
 
     # sort by time
     sortedData = data.sort_by {|key, value| value["time"]}
