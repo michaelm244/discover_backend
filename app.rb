@@ -21,6 +21,7 @@ class App < NYNY::App
     user_id = data["user_id"]
 
     data.each do |key, val|
+      next if key == "user_id"
       currentQuery = $col.find({:user_id => user_id, :url => key}).limit(1)
       currCount = currentQuery.count
 
