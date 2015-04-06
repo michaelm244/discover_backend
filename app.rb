@@ -12,6 +12,8 @@ class App < NYNY::App
   end
 
   post '/data_post' do
+    headers['Access-Control-Allow-Origin'] = 'chrome-extension://bklnejfjjbjnokioghhknnngghgfmhjc'
+    
     filename = (0...8).map { (65 + rand(26)).chr }.join
     filename << ".json"
     requestData = request.body.read
@@ -48,8 +50,6 @@ class App < NYNY::App
 
     puts "wrote to file #{filename}"
     puts requestData
-
-    headers['Access-Control-Allow-Origin'] = 'chrome-extension://bklnejfjjbjnokioghhknnngghgfmhjc'
   end
 
   get '/suggested_sites/:user_id' do
