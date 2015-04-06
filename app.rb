@@ -59,8 +59,6 @@ class App < NYNY::App
 
     data = $col.find(:user_id => user_id)
 
-    return 'Invalid user id' if data.count == 0
-
     if data.count == 0
       'Invalid user id'
     else
