@@ -64,6 +64,7 @@ class App < NYNY::App
 
     data.each do |entry|
       filteredData.push(entry) if entry["visits"] < 10
+    end
 
     binding.pry
 
