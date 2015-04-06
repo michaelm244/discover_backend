@@ -13,7 +13,7 @@ class App < NYNY::App
 
   post '/data_post' do
     headers['Access-Control-Allow-Origin'] = 'chrome-extension://bklnejfjjbjnokioghhknnngghgfmhjc'
-    
+
     filename = (0...8).map { (65 + rand(26)).chr }.join
     filename << ".json"
     requestData = request.body.read
@@ -27,7 +27,7 @@ class App < NYNY::App
       if currCount > 0
         currentQuery.update_one("$inc" => {:time => val["time"], :visits => val["visits"]})
       else
-        $col.insert ({
+        $col.insert_one ({
           :user_id => user_id, 
           :time => val["time"], 
           :url => key,
