@@ -51,6 +51,8 @@ class App < NYNY::App
 
     puts "wrote to file #{filename}"
     puts requestData
+
+    'got it!'
   end
 
   get '/suggested_sites/:user_id' do
