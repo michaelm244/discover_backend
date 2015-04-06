@@ -67,10 +67,8 @@ class App < NYNY::App
       filteredData.push(entry) if entry["visits"] < 10
     end
 
-    binding.pry
-
     # sort by time
-    sortedData = data.sort_by {|key, value| value["time"]}
+    sortedData = filteredData.sort_by! {|value| value["time"]}
 
     JSON.generate sortedData.slice((-10..-1))
   end
