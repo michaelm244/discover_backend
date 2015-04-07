@@ -12,7 +12,7 @@ class App < NYNY::App
   end
 
   post '/data_post' do
-    headers['Access-Control-Allow-Origin'] = 'chrome-extension://oophbkhofmknaajfheijgcfbpcehphaj'
+    headers['Access-Control-Allow-Origin'] = 'chrome-extension://bklnejfjjbjnokioghhknnngghgfmhjc'
 
     filename = (0...8).map { (65 + rand(26)).chr }.join
     filename << ".json"
@@ -57,7 +57,7 @@ class App < NYNY::App
 
   get '/suggested_sites/:user_id' do
     user_id = params["user_id"]
-    headers['Access-Control-Allow-Origin'] = 'chrome-extension://oophbkhofmknaajfheijgcfbpcehphaj'
+    headers['Access-Control-Allow-Origin'] = 'chrome-extension://bklnejfjjbjnokioghhknnngghgfmhjc'
 
     data = $col.find(:user_id => user_id)
 
