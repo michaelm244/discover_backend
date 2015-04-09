@@ -65,7 +65,7 @@ class App < NYNY::App
 
   get '/suggested_sites/:user_id' do
     user_id = params["user_id"]
-    headers['Access-Control-Allow-Origin'] = 'chrome-extension://bklnejfjjbjnokioghhknnngghgfmhjc'
+    headers['Access-Control-Allow-Origin'] = 'chrome-extension://oophbkhofmknaajfheijgcfbpcehphaj'
 
     data = $entry_col.find(:user_id => user_id)
 
