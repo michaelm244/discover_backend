@@ -58,8 +58,8 @@ class App < NYNY::App
 
   post '/feedback' do
     headers['Access-Control-Allow-Origin'] = 'chrome-extension://oophbkhofmknaajfheijgcfbpcehphaj'
-    binding.pry
-    #$feedback_col.insert_one ({})
+    params.delete "_id"
+    $feedback_col.insert_one (params)
     'got it cuh'
   end
 
