@@ -57,7 +57,7 @@ class App < NYNY::App
   end
 
   post '/feedback' do
-    headers['Access-Control-Allow-Origin'] = 'chrome-extension://oophbkhofmknaajfheijgcfbpcehphaj'
+    headers['Access-Control-Allow-Origin'] = 'chrome-extension://bklnejfjjbjnokioghhknnngghgfmhjc'
     params.delete "_id"
     $feedback_col.insert_one (params)
     'got it cuh'
@@ -65,7 +65,7 @@ class App < NYNY::App
 
   get '/suggested_sites/:user_id' do
     user_id = params["user_id"]
-    headers['Access-Control-Allow-Origin'] = 'chrome-extension://oophbkhofmknaajfheijgcfbpcehphaj'
+    headers['Access-Control-Allow-Origin'] = 'chrome-extension://bklnejfjjbjnokioghhknnngghgfmhjc'
 
     data = $entry_col.find(:user_id => user_id)
 
