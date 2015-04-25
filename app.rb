@@ -1,11 +1,29 @@
 require 'pry'
 require 'nyny'
 require 'mongo'
+require 'httparty'
 include Mongo
 
 client = Mongo::Client.new([ '127.0.0.1:27017' ], :database => "discover")
 $entry_col = client['entries']
 $feedback_col = client['feedback']
+
+$WHITELIST_SITES = []
+
+(0..19).each do |num|
+  extraParam = "&kimpath2=category;#{num}"
+  response = HTTParty.get("https://www.kimonolabs.com/api/byeacp5e?apikey=h9KtzbdFexV610fmIa7O25kVhxfCdzG1#{extraParam}")
+  body = response.body
+  bodyJSON = JSON.parse body
+  arr = bodyJSON["results"]["collection1"]
+  arr.each do |result|
+    url = result["site"]["text"]
+    url.downcase!
+    $WHITELIST_SITES.push url
+  end
+end
+
+puts $WHITELIST_SITES
 
 class App < NYNY::App
   get '/' do
@@ -69,6 +87,19 @@ class App < NYNY::App
       $feedback_col.insert_one (params)
     end
     'got it cuh'
+  end
+
+  def url_in_whitelist
+
+  def filter_data results
+    filteredData = []
+    data.each do |entry|
+
+
+
+    filteredData
+  end
+
   end
 
   get '/suggested_sites/:user_id' do
