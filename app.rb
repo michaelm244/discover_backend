@@ -18,6 +18,7 @@ class App < NYNY::App
   end
 
   get '/whitelist_sites' do
+    headers['Access-Control-Allow-Origin'] = 'chrome-extension://oophbkhofmknaajfheijgcfbpcehphaj'
     $WHITELIST_SITES
   end
 
