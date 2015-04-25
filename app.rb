@@ -90,16 +90,13 @@ class App < NYNY::App
   end
 
   def url_in_whitelist
+  end
 
   def filter_data results
     filteredData = []
     data.each do |entry|
-
-
-
+    end
     filteredData
-  end
-
   end
 
   get '/suggested_sites/:user_id' do
