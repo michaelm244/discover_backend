@@ -12,13 +12,15 @@ $WHITELIST_SITES = []
 
 (0..19).each do |num|
   extraParam = "&kimpath2=category;#{num}"
-  response = HTTParty.get("https://www.kimonolabs.com/api/byeacp5e?apikey=h9KtzbdFexV610fmIa7O25kVhxfCdzG1#{extraParam}")
+  response = HTTParty.get("https://www.kimonolabs.com/api/ondemand/byeacp5e?apikey=h9KtzbdFexV610fmIa7O25kVhxfCdzG1#{extraParam}")
   body = response.body
   bodyJSON = JSON.parse body
   arr = bodyJSON["results"]["collection1"]
   arr.each do |result|
     url = result["site"]["text"]
     url.downcase!
+    url[0..6] if url.start_with? "http://"
+    url[0..7] if url.start_with? "https://"
     $WHITELIST_SITES.push url
   end
 end
@@ -89,14 +91,21 @@ class App < NYNY::App
     'got it cuh'
   end
 
-  def url_in_whitelist
+  def url_in_whitelist (domain)
+    $WHITELIST_SITES.include? domain
   end
 
   def filter_data results
     filteredData = []
     data.each do |entry|
+      url = URI.parse entry["url"]
+      hostname = url.host
+      hostname[0..3] = '' if hostname.start_with? "www."
+      passChecks = url_in_whitelist(hostname) && entry["visits"] < 10
     end
-    filteredData
+
+    sortedData = filteredData.sort_by! {|value| value["time"]}
+    sortedData
   end
 
   get '/suggested_sites/:user_id' do
@@ -108,19 +117,12 @@ class App < NYNY::App
     if data.count == 0
       JSON.generate []
     else
-      filteredData = []
+      filteredData = filter_data data
 
-      data.each do |entry|
-        filteredData.push(entry) if entry["visits"] < 10
-      end
-
-      # sort by time
-      sortedData = filteredData.sort_by! {|value| value["time"]}
-
-      if sortedData.length < 10
-        JSON.generate sortedData
+      if filteredData.length < 10
+        JSON.generate filteredData
       else
-        JSON.generate sortedData.slice((-10..-1))
+        JSON.generate filteredData.slice((-10..-1))
       end
     end
   end
