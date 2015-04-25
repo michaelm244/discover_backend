@@ -8,24 +8,7 @@ client = Mongo::Client.new([ '127.0.0.1:27017' ], :database => "discover")
 $entry_col = client['entries']
 $feedback_col = client['feedback']
 
-$WHITELIST_SITES = []
-
-(0..19).each do |num|
-  extraParam = "&kimpath2=category;#{num}"
-  response = HTTParty.get("https://www.kimonolabs.com/api/ondemand/byeacp5e?apikey=h9KtzbdFexV610fmIa7O25kVhxfCdzG1#{extraParam}")
-  body = response.body
-  bodyJSON = JSON.parse body
-  arr = bodyJSON["results"]["collection1"]
-  arr.each do |result|
-    url = result["site"]["text"]
-    url.downcase!
-    url[0..6] if url.start_with? "http://"
-    url[0..7] if url.start_with? "https://"
-    $WHITELIST_SITES.push url
-  end
-end
-
-puts $WHITELIST_SITES
+$WHITELIST_SITES = "hi"
 
 class App < NYNY::App
   get '/' do
@@ -33,7 +16,7 @@ class App < NYNY::App
   end
 
   get '/whitelist_sites' do
-    JSON.generate $WHITELIST_SITES
+    $WHITELIST_SITES
   end
 
   post '/data_post' do
