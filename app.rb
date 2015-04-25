@@ -8,7 +8,9 @@ client = Mongo::Client.new([ '127.0.0.1:27017' ], :database => "discover")
 $entry_col = client['entries']
 $feedback_col = client['feedback']
 
-$WHITELIST_SITES = "hi"
+whitelistFile = File.open("whitelist_sites.json", "r")
+
+$WHITELIST_SITES = whitelistFile.read
 
 class App < NYNY::App
   get '/' do
