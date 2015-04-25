@@ -119,6 +119,8 @@ class App < NYNY::App
     else
       filteredData = filter_data data
 
+      binding.pry
+
       if filteredData.length < 10
         JSON.generate filteredData
       else
