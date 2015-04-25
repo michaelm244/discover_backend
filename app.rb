@@ -103,7 +103,7 @@ class App < NYNY::App
 
     def filter_data results
       filteredData = []
-      data.each do |entry|
+      results.each do |entry|
         url = URI.parse entry["url"]
         hostname = url.host
         hostname[0..3] = '' if hostname.start_with? "www."
