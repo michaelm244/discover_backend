@@ -32,6 +32,10 @@ class App < NYNY::App
     'wassup cuh'
   end
 
+  get '/whitelist_sites' do
+    JSON.generate $WHITELIST_SITES
+  end
+
   post '/data_post' do
     headers['Access-Control-Allow-Origin'] = 'chrome-extension://bklnejfjjbjnokioghhknnngghgfmhjc'
 
@@ -97,17 +101,10 @@ class App < NYNY::App
 
     data = $entry_col.find(:user_id => user_id)
 
-    def url_in_whitelist (domain)
-      $WHITELIST_SITES.include? domain
-    end
-
     def filter_data results
       filteredData = []
       results.each do |entry|
-        url = URI.parse entry["url"]
-        hostname = url.host
-        hostname[0..3] = '' if hostname.start_with? "www."
-        passChecks = url_in_whitelist(hostname) && entry["visits"] < 10
+        filteredData.push entry if entry["visits"] < 10
       end
 
       sortedData = filteredData.sort_by! {|value| value["time"]}
@@ -119,13 +116,7 @@ class App < NYNY::App
     else
       filteredData = filter_data data
 
-      binding.pry
-
-      if filteredData.length < 10
-        JSON.generate filteredData
-      else
-        JSON.generate filteredData.slice((-10..-1))
-      end
+      JSON.generate filteredData
     end
   end
 end
