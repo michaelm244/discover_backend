@@ -91,28 +91,28 @@ class App < NYNY::App
     'got it cuh'
   end
 
-  def url_in_whitelist (domain)
-    $WHITELIST_SITES.include? domain
-  end
-
-  def filter_data results
-    filteredData = []
-    data.each do |entry|
-      url = URI.parse entry["url"]
-      hostname = url.host
-      hostname[0..3] = '' if hostname.start_with? "www."
-      passChecks = url_in_whitelist(hostname) && entry["visits"] < 10
-    end
-
-    sortedData = filteredData.sort_by! {|value| value["time"]}
-    sortedData
-  end
-
   get '/suggested_sites/:user_id' do
     user_id = params["user_id"]
     headers['Access-Control-Allow-Origin'] = 'chrome-extension://bklnejfjjbjnokioghhknnngghgfmhjc'
 
     data = $entry_col.find(:user_id => user_id)
+
+    def url_in_whitelist (domain)
+      $WHITELIST_SITES.include? domain
+    end
+
+    def filter_data results
+      filteredData = []
+      data.each do |entry|
+        url = URI.parse entry["url"]
+        hostname = url.host
+        hostname[0..3] = '' if hostname.start_with? "www."
+        passChecks = url_in_whitelist(hostname) && entry["visits"] < 10
+      end
+
+      sortedData = filteredData.sort_by! {|value| value["time"]}
+      sortedData
+    end
 
     if data.count == 0
       JSON.generate []
