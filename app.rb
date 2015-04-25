@@ -59,7 +59,15 @@ class App < NYNY::App
   post '/feedback' do
     headers['Access-Control-Allow-Origin'] = 'chrome-extension://bklnejfjjbjnokioghhknnngghgfmhjc'
     params.delete "_id"
-    $feedback_col.insert_one (params)
+    currentQuery = $feedback_col.find({:user_id => params["user_id"], :url => params["url"], :question => params["question"]}).limit(1)
+    currCount = currentQuery.count
+
+    if currCount > 0
+      updateHash = { :answer => params["answer"], :visits => params["visits"], :time => params["time"]}
+      currentQuery.update_one('$set' => updateHash)
+    else
+      $feedback_col.insert_one (params)
+    end
     'got it cuh'
   end
 
