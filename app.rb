@@ -107,7 +107,14 @@ class App < NYNY::App
   end
 
   get '/feedback' do
-    puts params
+    user_id = params["user_id"]
+    url = params["url"]
+    question = params["question"]
+    currentQuery = $feedback_col.find({:user_id => params["user_id"], :url => params["url"]})
+    currentQuery.each do |result|
+      puts result
+    end
+    binding.pry
     'yo'
   end
 end
