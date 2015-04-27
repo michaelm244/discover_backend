@@ -90,7 +90,7 @@ class App < NYNY::App
     def filter_data results
       filteredData = []
       results.each do |entry|
-        filteredData.push entry if entry["visits"] < 10
+        filteredData.push entry if entry["visits"] < 30
       end
 
       sortedData = filteredData.sort_by! {|value| value["time"]}
