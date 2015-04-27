@@ -107,6 +107,7 @@ class App < NYNY::App
   end
 
   get '/feedback' do
+    headers['Access-Control-Allow-Origin'] = 'chrome-extension://oophbkhofmknaajfheijgcfbpcehphaj'
     user_id = params["user_id"]
     url = params["url"]
     question = params["question"]
