@@ -110,12 +110,21 @@ class App < NYNY::App
     user_id = params["user_id"]
     url = params["url"]
     question = params["question"]
+    RECOMMEND_INDEX = 0
+    QUESTION_INDEX = 1
+    result_arr = [false, false]
     currentQuery = $feedback_col.find({:user_id => params["user_id"], :url => params["url"]})
     currentQuery.each do |result|
       puts result
+      if result["question"] == "recommend"
+        answer = result["answer"] == "yes" ? true : false
+        result_arr[RECOMMEND_INDEX] = answer
+      elsif result["question"] == "shared"
+        answer = result["answer"] == "yes" ? true : false
+        result_arr[RECOMMEND_INDEX] = answer
+      end
     end
-    binding.pry
-    'yo'
+    JSON.generate result_arr
   end
 end
 
