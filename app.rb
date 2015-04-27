@@ -18,7 +18,7 @@ class App < NYNY::App
   end
 
   get '/whitelist_sites' do
-    headers['Access-Control-Allow-Origin'] = 'chrome-extension://bklnejfjjbjnokioghhknnngghgfmhjc'
+    headers['Access-Control-Allow-Origin'] = 'chrome-extension://oophbkhofmknaajfheijgcfbpcehphaj'
     $WHITELIST_SITES
   end
 
@@ -83,7 +83,7 @@ class App < NYNY::App
 
   get '/suggested_sites/:user_id' do
     user_id = params["user_id"]
-    headers['Access-Control-Allow-Origin'] = 'chrome-extension://bklnejfjjbjnokioghhknnngghgfmhjc'
+    headers['Access-Control-Allow-Origin'] = 'chrome-extension://oophbkhofmknaajfheijgcfbpcehphaj'
 
     data = $entry_col.find(:user_id => user_id)
 
