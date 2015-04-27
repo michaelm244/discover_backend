@@ -105,6 +105,11 @@ class App < NYNY::App
       JSON.generate filteredData
     end
   end
+
+  get '/feedback' do
+    puts params
+    'yo'
+  end
 end
 
 App.run!
